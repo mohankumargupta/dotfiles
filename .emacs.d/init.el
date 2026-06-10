@@ -28,8 +28,44 @@
                 display-line-numbers-width 3
                 indent-tabs-mode nil
                 fill-column 100
-                tab-width 4)
-  (global-display-line-numbers-mode 1))
+                tab-width 4
+                mode-line-format nil)
+  (global-display-line-numbers-mode 1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1))
+
+
+;; AutoCompletion
+
+(use-package corfu
+    :init
+    (global-corfu-mode)
+    :config
+    (setq corfu-auto t
+          corfu-echo-documentation t
+          corfu-scroll-margin 0
+          corfu-count 8
+          corfu-max-width 50
+          corfu-min-width corfu-max-width
+          corfu-auto-prefix 2))
+
+(use-package corfu-terminal
+  :hook
+  (corfu-mode . corfu-terminal-mode)
+)
+
+(use-package eglot
+  :ensure t 
+  :config
+  ;; Tell Eglot to use the globally exposed rass tool for Python
+  (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) . 
+               ("rass" "python"))))
+;; Automatically spin up Eglot and format your code on-save
+(add-hook 'python-base-mode-hook (lambda () (eglot-ensure) (add-hook 
+            'after-save-hook #'eglot-format nil t)))
+(add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
+  
+
 
 ;; Load custom keybindings
 

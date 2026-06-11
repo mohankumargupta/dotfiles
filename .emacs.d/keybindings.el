@@ -15,6 +15,10 @@
 (keymap-global-set "C-<up>" 'beginning-of-buffer)
 (keymap-global-set "C-<down>" 'end-of-buffer)
 
+;;ibuffer
+(keymap-global-set "C-x C-b" 'ibuffer)
+
+
 
 ;; Define a custom function to kill the whole current line
 (defun my-kill-whole-line ()
@@ -50,5 +54,17 @@
   (push-mark nil nil t)
   (move-end-of-line 1))
 
-;; Modern Emacs 29+ global keybinding
-(keymap-global-set "C-l" 'my-select-current-line)
+(keymap-global-set "<f5>" 'dape)
+(keymap-global-set "<f9>" 'dape-breakpoint-toggle)
+(keymap-global-set "<f10>" 'dape-next)
+(keymap-global-set "<f11>" 'dape-step-in)
+(keymap-global-set "S-<f11>" 'dape-step-out)
+;(keymap-global-set "C-c d c" 'dape-continue)
+(keymap-global-set "C-<f9>" 'dape-quit)
+
+
+
+
+
+
+

@@ -27,12 +27,13 @@
   (setq-default truncate-lines t
                 display-line-numbers-width 3
                 indent-tabs-mode nil
-                fill-column 100
                 tab-width 4
                 mode-line-format nil)
   (global-display-line-numbers-mode 1)
   (menu-bar-mode -1)
   (tool-bar-mode -1))
+  (load-theme 'modus-vivendi :no-confirm)
+
 
 
 ;; AutoCompletion
@@ -64,10 +65,42 @@
 (add-hook 'python-base-mode-hook (lambda () (eglot-ensure) (add-hook 
             'after-save-hook #'eglot-format nil t)))
 (add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
-  
 
+
+(use-package pet
+  :ensure t
+  :config
+  ;; Enable standard diagnostic tracking
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
+
+(with-eval-after-load 'dape
+  (add-to-list 'dape-configs
+               `(uv-debugpy modes (python-mode python-ts-mode)
+                         ;; Dynamically extract pet's calculated executable path
+                         command ,(lambda () (or pet-python-executable "python"))
+                         command-args ("-m" "debugpy.adapter" "--host" "0.0.0.0" "--port" :autoport)
+                         :cwd dape-cwd
+                         :program dape-buffer-default)))
+  
+;; uv environment management
+;; (use-package uv-mode
+;;  :hook 
+;;  (python-base-mode . uv-mode))
+
+
+
+(use-package dape
+  :ensure t
+  :config
+  (dape-breakpoint-global-mode 1)
+)
 
 ;; Load custom keybindings
 
 (add-to-list 'load-path (expand-file-name "user-emacs-directory" user-emacs-directory))
 (load (expand-file-name "keybindings.el" user-emacs-directory))
+
+
+
+
+

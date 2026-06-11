@@ -31,8 +31,8 @@
                 mode-line-format nil)
   (global-display-line-numbers-mode 1)
   (menu-bar-mode -1)
-  (tool-bar-mode -1))
-  (load-theme 'modus-vivendi :no-confirm)
+  (tool-bar-mode -1)
+  (load-theme 'modus-vivendi :no-confirm))
 
 
 

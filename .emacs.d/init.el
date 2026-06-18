@@ -108,6 +108,35 @@
 
 
 
+;; Requires project.el, which ships with Emacs since v28 (circa beginning 2022)
+(defun my/project-root-or-default-dir ()
+  (if-let ((proj (project-current)))
+      (project-root proj)
+    default-directory))
+
+(defun setup-jai-mode ()
+  (setq js-indent-level 4
+        indent-tabs-mode nil)
+  ;; This sets compile-command for compilation-mode - useful when you're compiling from Emacs.
+  ;; jai-mode supports clicking on compile error messages to navigate directly to the source.
+  (setq-local compile-command
+              (concat "jai "
+                      (let* ((root (my/project-root-or-default-dir))
+                             (build-jai (concat root "build.jai"))
+                             (main-jai (concat root "main.jai"))
+                             (current-jai (buffer-file-name)))
+                        (cond
+                         ((file-exists-p build-jai) build-jai)
+                         ((file-exists-p main-jai) main-jai)
+                         (t current-jai))))))
+
+(use-package jai-mode
+  :defer t
+  :straight (jai-mode :host github :repo "valignatev/jai-mode")
+  :config
+  :hook ((jai-mode-hook . setup-jai-mode)))
+
+
 
 
 

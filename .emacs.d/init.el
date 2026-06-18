@@ -87,13 +87,63 @@
 ;;  :hook 
 ;;  (python-base-mode . uv-mode))
 
-
-
 (use-package dape
   :ensure t
   :config
   (dape-breakpoint-global-mode 1)
 )
+
+(use-package justl
+  :ensure t
+  :custom
+  (justl-executable "C:/Users/mohan/.cargo/bin/just.exe"))
+
+  
+(use-package drag-stuff
+  :ensure t
+  :init
+  (drag-stuff-global-mode 1)
+  :config
+  (drag-stuff-define-keys))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ;; Load custom keybindings
 

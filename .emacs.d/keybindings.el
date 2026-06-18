@@ -62,6 +62,24 @@
 ;(keymap-global-set "C-c d c" 'dape-continue)
 (keymap-global-set "C-<f9>" 'dape-quit)
 
+(defun justl-run-recipe ()
+ (interactive)
+ (let ((justfile (justl--find-justfile default-directory)))
+ (if justfile
+     (let ((default-directory (file-name-directory justfile)))
+     (compile (format "%s run" justl-executable)))
+     (error "No justfile found in this directory tree"))))
+
+(keymap-global-set "<f5>"     'justl-exec-default-recipe)
+(keymap-global-set "<f6>"     #'justl-run-recipe)
+
+
+(defun force-clear-minibuffer ()
+  (interactive)
+  (when (active-minibuffer-window)
+      (abort-recursive-edit)))
+
+(keymap-global-set "C-<f9>" #'delete-other-windows)          
 
 
 

@@ -1,6 +1,7 @@
 
 set shell:= ["bash", "-c"]
 set windows-shell := ["powershell", "-c"]
+#set fallback := true
 
 mod yt-dlp "justfile-ytdlp.just"
 

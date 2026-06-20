@@ -5,6 +5,55 @@
 (global-set-key (kbd "C-o") 'find-file)           ; Ctrl+O to Open file
 (global-set-key (kbd "C-q") 'save-buffers-kill-terminal) ; Ctrl+Q to Quit
 
+(keymap-global-set "C-/" 'comment-region )
+
+(defun copy-line-to-clipboard ()
+  "Select the entire current line, copy it to the clipboard, and deactivate the mark."
+  (interactive)
+  (let ((beg (line-beginning-position))
+       (end (line-end-position)))
+       (kill-ring-save beg end)
+       (deactivate-mark)))
+                          
+(keymap-global-set "C-l" 'copy-line-to-clipboard )
+
+(defun my-goto-first-line-start ()
+  "Move cursor to the beginning of the first line in the buffer."
+  (interactive)
+  (goto-char (point-min))
+  (beginning-of-line))
+
+(defun my-goto-last-line-start ()
+   "Move cursor to the beginning of the last line in the buffer."
+   (interactive)
+   (goto-char (point-max))
+   (beginning-of-line))
+
+(keymap-global-set "C-<up>" 'my-goto-first-line-start )
+(keymap-global-set "C-<down>" 'my-goto-last-line-start )
+
+(defun justl-run-recipe ()
+ (interactive)
+ (let ((justfile (justl--find-justfile default-directory)))
+ (if justfile
+     (let ((default-directory (file-name-directory justfile)))
+     (compile (format "%s run" justl-executable)))
+     (error "No justfile found in this directory tree"))))
+
+(keymap-global-set "<f5>"     'justl-exec-default-recipe)
+(keymap-global-set "<f6>"     #'justl-run-recipe)
+
+;; this is used to exit f6, exiting f5 is simply q(minibuffer)
+(defun force-clear-minibuffer ()
+  (interactive)
+  (when (active-minibuffer-window)
+      (abort-recursive-edit)))
+
+(keymap-global-set "C-<f9>" #'delete-other-windows)          
+
+
+
+
 ;;Micro keybindings
 (keymap-global-set "C-s" 'save-buffer)                   
 (keymap-global-set "C-f" 'isearch-forward ) 

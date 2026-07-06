@@ -14,6 +14,7 @@
 
   ;; 2. CUSTOM SYSTEM VARIABLES (Standard User Preferences)
   :custom
+  (xref-search-program 'ripgrep)
   (tab-always-indent 'complete)         ; Tab indents code, or completes if already indented
   (create-lockfiles nil)                ; Stop creating temporary .# files
   (make-backup-files nil)               ; Disable backup~ files (use Git instead)
@@ -34,10 +35,34 @@
   :config
   ;; Turn off visual clutter
   (tool-bar-mode -1)
-  
+  (menu-bar-mode -1)
   ;; Set the fallback indentation rules
   (setq-default tab-width 4
                 indent-tabs-mode nil))  ; Use spaces instead of physical tabs
 
+;;THEME
+(use-package github-dark-vscode-theme
+  :vc (:url "https://github.com/raspberrypisig/github-dark-vscode-emacs-theme"
+       :rev :headline)
+  :ensure t
+  :config
+  (load-theme 'github-dark-vscode t))
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
+(use-package treesit
+  :ensure nil ; Built-in, no need to download
+  :custom
+  (treesit-auto-install-grammar 'always)
+  (treesit-enabled-modes t))

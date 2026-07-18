@@ -73,4 +73,9 @@ screenshot youtube_url timestamp file:
     yt-dlp -f "bv*+ba/b" --merge-output-format mkv  --download-sections "*$start-$end" -o 'clip.%(ext)s' "{{youtube_url}}"; \
     ffmpeg -y -i clip.mkv -frames:v 1 "{{file}}"
     rm clip.mkv
-    
+
+[no-cd]
+github:   
+    gh repo create --source=. --public --push
+
+

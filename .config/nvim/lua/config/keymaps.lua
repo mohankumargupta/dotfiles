@@ -28,6 +28,9 @@ vim.keymap.set({"n", "i", "v"}, "<C-z>", "<Cmd>undo<CR>", { noremap = true, sile
 -- Ctrl+Y to Redo
 vim.keymap.set({"n", "i", "v"}, "<C-y>", "<Cmd>redo<CR>", { noremap = true, silent = true, desc = "CUA: Redo" })
 
+-- quit
+vim.keymap.set({"n", "i", "v"}, "<C-q>", "<Cmd>qa<CR>", { desc = "Quit All" })
+
 -- Move current line down/up in Normal mode
 -- vim.keymap.del("n", "K")
 -- 2. Map Shift+J and Shift+K to move lines up and down (Normal Mode)
@@ -56,3 +59,5 @@ vim.keymap.set("t", "<C-q>", function()
     term:hide()
   end
 end, { expr = true, desc = "Hide terminal" })
+
+

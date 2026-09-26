@@ -27,3 +27,32 @@ vim.keymap.set({"n", "i", "v"}, "<C-z>", "<Cmd>undo<CR>", { noremap = true, sile
 
 -- Ctrl+Y to Redo
 vim.keymap.set({"n", "i", "v"}, "<C-y>", "<Cmd>redo<CR>", { noremap = true, silent = true, desc = "CUA: Redo" })
+
+-- Move current line down/up in Normal mode
+-- vim.keymap.del("n", "K")
+-- 2. Map Shift+J and Shift+K to move lines up and down (Normal Mode)
+
+-- vim.keymap.set("n", "<C-,>", "<cmd>m .+1<cr>===", { desc = "Move line down" })
+-- vim.keymap.set("n", "<C-.", "<cmd>m .-2<cr>===", { desc = "Move line up" })
+
+-- vim.keymap.set("n", "k", "<cmd>m .-2<cr>==", { desc = "Move line up" })
+-- vim.keymap.set("n", "j", "<cmd>m .+1<cr>==", { desc = "Move line down" }
+
+vim.keymap.set({"n"}, "<C-l>" , function()
+ Snacks.terminal.toggle(nil, {
+    win = {
+      position = "right",
+      width = 0.5,
+    }
+  })
+end, {desc = "open terminal"})
+
+vim.keymap.set("t", "<C-q>", function()
+  if vim.bo.filetype ~= "snacks_terminal" then
+    return vim.api.nvim_replace_termcodes("<C-q>", true, false, true)
+  end
+  local term = Snacks.terminal.get(nil, { create = false })
+  if term then
+    term:hide()
+  end
+end, { expr = true, desc = "Hide terminal" })

@@ -24,3 +24,27 @@ _fzf_micro() {
     fi
 }
 
+t() {
+    # Ensure a URL was provided
+    if [ -z "$1" ]; then
+        echo "Error: Please provide a GitHub folder URL."
+        return 1
+    fi
+
+    # Regex to extract: user (1), repo (2), branch (3), and subfolder path (4)
+    if [[ "$1" =~ github\.com/([^/]+)/([^/]+)/tree/([^/]+)/(.*) ]]; then
+        local user="${BASH_REMATCH[1]}"
+        local repo="${BASH_REMATCH[2]}"
+        local branch="${BASH_REMATCH[3]}"
+        local subdir="${BASH_REMATCH[4]}"
+        
+        # Execute tiged using the current directory (.) as the destination
+        npx tiged --force "$user/$repo/$subdir#$branch" .
+    else
+        echo "Error: Invalid GitHub subfolder URL format."
+        echo "Expected format: https://github.com"
+        return 1
+    fi
+}
+
+
